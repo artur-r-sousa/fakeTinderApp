@@ -74,15 +74,31 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
           ),
-          Container(
-            height: 600,
-            child: FittedBox(
-              fit: BoxFit.fitHeight,
-              child: new Image.asset(
-                "assets/images/girl.jpg",
-                scale: 1,
+          Stack(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 5, right:5),
+                height: 600,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: new Image.asset(
+                    "assets/images/girl.jpg",
+                    scale: 1,
+                  ),
+                ),
               ),
-            ),
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 10, top: 500),
+                    child: Text(
+                      "UserName, Age \nState, city",
+                      style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
           Row(
             children: [
