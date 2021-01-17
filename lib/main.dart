@@ -32,37 +32,43 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white60,
-        actions: <Widget>[
-          Row(
-            children: [
-              IconButton(
-                  icon: Icon(
-                Icons.settings,
-                color: Colors.blueGrey,
-              )),
-              IconButton(
-                icon: Icon(
-                  Icons.local_fire_department,
-                  color: Colors.blueGrey,
-                ),
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: Colors.blueGrey,
-                ),
-              )
-            ],
-          )
-        ],
+        title: Row(
+          children: [
+            Container(
+                margin: EdgeInsets.only(left: 120),
+                child: Row(
+                  children: [
+                    IconButton(
+                        icon: Icon(
+                      Icons.settings,
+                      color: Colors.blueGrey,
+                    )),
+                    IconButton(
+                      icon: Icon(
+                        Icons.local_fire_department,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_horiz,
+                        color: Colors.blueGrey,
+                      ),
+                    )
+                  ],
+                )
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 50, left: 120),
+                margin: EdgeInsets.only(top: 10, left: 120),
                 child: Row(
                   children: [
                     Text(
@@ -77,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Stack(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(left: 5, right:5),
-                height: 600,
+                margin: EdgeInsets.only(left: 5, right: 5),
+                height: 630,
                 child: FittedBox(
                   fit: BoxFit.fitHeight,
                   child: new Image.asset(
@@ -93,7 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     margin: EdgeInsets.only(left: 10, top: 500),
                     child: Text(
                       "UserName, Age \nState, city",
-                      style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
