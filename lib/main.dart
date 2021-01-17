@@ -28,23 +28,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white60,
-        actions: <Widget> [
+        actions: <Widget>[
           Row(
-
             children: [
               IconButton(
                   icon: Icon(
-                    Icons.settings,
-                    color: Colors.blueGrey,
-                  )
-              ),
+                Icons.settings,
+                color: Colors.blueGrey,
+              )),
               IconButton(
                 icon: Icon(
                   Icons.local_fire_department,
@@ -66,46 +62,53 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(top:50, left: 120),
+                margin: EdgeInsets.only(top: 50, left: 120),
                 child: Row(
                   children: [
-                    Text("Fake Tinder App", style: TextStyle(fontSize: 25),),
+                    Text(
+                      "Fake Tinder App",
+                      style: TextStyle(fontSize: 25),
+                    ),
                   ],
                 ),
               )
             ],
           ),
-          SizedBox(height: 50,),
-          new Image.asset("assets/images/girl.jpg", scale: 1,),
-          SizedBox(height: 30,),
-          Text("Bruna, 24", style: TextStyle(fontSize: 18)),
-          Text("RJ, Niteroi", style: TextStyle(fontSize: 16)),
-          SizedBox(height: 50,),
+          Container(
+            height: 600,
+            child: FittedBox(
+              fit: BoxFit.fitHeight,
+              child: new Image.asset(
+                "assets/images/girl.jpg",
+                scale: 1,
+              ),
+            ),
+          ),
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(top:20, left: 120),
+                margin: EdgeInsets.only(top: 20, left: 120),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget> [
+                  children: <Widget>[
                     FloatingActionButton(
-
                       heroTag: null,
                       onPressed: null,
                       tooltip: 'Increment',
-
-                      child: Icon(Icons.cancel),
-
+                      child: Icon(
+                        Icons.cancel,
+                        size: 50,
+                      ),
                     ),
                     SizedBox(width: 40),
                     FloatingActionButton(
-
                       heroTag: null,
                       onPressed: null,
                       tooltip: 'Increment',
-
-                      child: Icon(Icons.favorite),
-
+                      child: Icon(
+                        Icons.favorite,
+                        size: 40,
+                      ),
                     ),
                   ],
                 ),
@@ -113,13 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           )
         ],
-
       ),
 
-      bottomNavigationBar: Row(
-
-        ),
- // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: Row(),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
