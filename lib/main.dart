@@ -108,17 +108,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Row(
                   children: [
                     IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UserSettings())
+                      );
+                    },
                         icon: Icon(
                       Icons.settings,
                       color: Colors.blueGrey,
+
                     )),
-                    IconButton(
+                    IconButton(onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UserMatches())
+                      );
+                    },
                       icon: Icon(
                         Icons.local_fire_department,
                         color: Colors.blueGrey,
                       ),
                     ),
-                    IconButton(
+                    IconButton(onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UserMessages())
+                      );
+                    },
                       icon: Icon(
                         Icons.more_horiz,
                         color: Colors.blueGrey,
@@ -224,4 +241,62 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class UserSettings extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('User Settings'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Open route'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class UserMatches extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Matches'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Open route'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class UserMessages extends StatelessWidget{
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Messages'),
+    ),
+    body: Center(
+      child: ElevatedButton(
+        child: Text('Open route'),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    ),
+  );
+}
+}
+
 
