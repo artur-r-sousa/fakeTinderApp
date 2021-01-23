@@ -14,8 +14,16 @@ class User {
   final String description;
   final String email;
 
-  User({this.id, this.imgUrl, this.name, this.age, this.localeState,
-    this.localeCity, this.description, this.email});
+  User(
+      {this.id,
+      this.imgUrl,
+      this.name,
+      this.age,
+      this.localeState,
+      this.localeCity,
+      this.description,
+      this.email});
+
 //
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -40,9 +48,7 @@ Future<String> getJSONData() async {
 
 Future<User> fetchUser() async {
   final response =
-  await http.get('https://faketinder-spring-flutter.herokuapp.com/users/1');
-
-
+      await http.get('https://faketinder-spring-flutter.herokuapp.com/users/1');
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -55,11 +61,11 @@ Future<User> fetchUser() async {
   }
 }
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   MyApp({Key key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -110,40 +116,40 @@ class _MyHomePageState extends State<MyHomePage> {
                     IconButton(
                         onPressed: () {
                           Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => UserSettings())
-                      );
-                    },
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserSettings()));
+                        },
                         icon: Icon(
-                      Icons.settings,
-                      color: Colors.blueGrey,
-
-                    )),
-                    IconButton(onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => UserMatches())
-                      );
-                    },
+                          Icons.settings,
+                          color: Colors.blueGrey,
+                        )),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserMatches()));
+                      },
                       icon: Icon(
                         Icons.local_fire_department,
                         color: Colors.blueGrey,
                       ),
                     ),
-                    IconButton(onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => UserMessages())
-                      );
-                    },
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserMessages()));
+                      },
                       icon: Icon(
                         Icons.more_horiz,
                         color: Colors.blueGrey,
                       ),
                     )
                   ],
-                )
-            ),
+                )),
           ],
         ),
       ),
@@ -171,36 +177,42 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin: EdgeInsets.only(left: 5, right: 5),
                   height: 600,
                   child: FittedBox(
-
                     fit: BoxFit.fitHeight,
                     child: new Image.asset(
                       "assets/images/girl.jpg",
-                      width: 100, height: 100,
+                      width: 100,
+                      height: 100,
                     ),
                   ),
                 ),
                 Row(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(left: 10, top: 500),
+                        margin: EdgeInsets.only(left: 10, top: 400),
                         child: FutureBuilder<User>(
                             future: fetchUser(),
                             builder: (context, snapshot) {
-                              if(snapshot.hasData) {
-                                return Text(snapshot.data.name.toString(), style: TextStyle(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold));
+                              if (snapshot.hasData) {
+                                return Text(
+                                    snapshot.data.name.toString() +
+                                        "\n" +
+                                        snapshot.data.localeState.toString() +
+                                        "\n" +
+                                        snapshot.data.localeCity.toString(),
+                                    style: TextStyle(
+                                        fontSize: 35,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold));
                               } else if (snapshot.hasError) {
                                 return Text("${snapshot.error}");
                               }
                               // By default, show a loading spinner.
                               return CircularProgressIndicator();
-                            }
-                        )
-                    ),
+                            })),
                   ],
                 )
               ],
             ),
-
           ),
           Row(
             children: [
@@ -242,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class UserSettings extends StatelessWidget{
+class UserSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,18 +262,125 @@ class UserSettings extends StatelessWidget{
         title: Text('User Settings'),
       ),
       body: Center(
-        child: ElevatedButton(
-          child: Text('Open route'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        child: Container(
+            margin: EdgeInsets.only(left: 20, right:20, top: 20, bottom: 20),
+            child: ListView(children: [
+              Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: FutureBuilder<User>(
+
+                    future: fetchUser(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        return Text(
+                          "Name: " + snapshot.data.name.toString(),
+                        );
+                      } else if(snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    }
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: FutureBuilder<User>(
+
+                    future: fetchUser(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        return Text(
+                          "Age: " + snapshot.data.age.toString(),
+                        );
+                      } else if(snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    }
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: FutureBuilder<User>(
+
+                    future: fetchUser(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        return Text(
+                          "Description: " + snapshot.data.description.toString(),
+                        );
+                      } else if(snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    }
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: FutureBuilder<User>(
+
+                    future: fetchUser(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        return Text(
+                          "State: " + snapshot.data.localeState.toString(),
+                        );
+                      } else if(snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    }
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: FutureBuilder<User>(
+
+                    future: fetchUser(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        return Text(
+                          "City: " + snapshot.data.localeCity.toString(),
+                        );
+                      } else if(snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    }
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: FutureBuilder<User>(
+
+                    future: fetchUser(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        return Text(
+                          "Email: " + snapshot.data.email.toString(),
+                        );
+                      } else if(snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    }
+                ),
+              ),
+              ElevatedButton(
+                child: Text('Save'),
+                onPressed: () {
+                  Navigator.pop(context);
+            },
+          )
+        ])
         ),
       ),
     );
   }
 }
 
-class UserMatches extends StatelessWidget{
+class UserMatches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -270,7 +389,7 @@ class UserMatches extends StatelessWidget{
       ),
       body: Center(
         child: ElevatedButton(
-          child: Text('Open route'),
+          child: Text('Back'),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -280,23 +399,21 @@ class UserMatches extends StatelessWidget{
   }
 }
 
-class UserMessages extends StatelessWidget{
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: Text('Messages'),
-    ),
-    body: Center(
-      child: ElevatedButton(
-        child: Text('Open route'),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+class UserMessages extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Messages'),
       ),
-    ),
-  );
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Back'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
+  }
 }
-}
-
-
