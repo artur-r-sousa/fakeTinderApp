@@ -1,11 +1,78 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() {
-  runApp(MyApp());
+//create the user class
+class User {
+  final int id;
+  final String imgUrl;
+  final String name;
+  final int age;
+  final String localeState;
+  final String localeCity;
+  final String description;
+  final String email;
+
+  User({this.id, this.imgUrl, this.name, this.age, this.localeState,
+    this.localeCity, this.description, this.email});
+//
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      imgUrl: json['imgUrl'],
+      name: json['name'],
+      age: json['age'],
+      localeState: json['localeState'],
+      localeCity: json['localeCity'],
+      description: json['description'],
+      email: json['email'],
+    );
+  }
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+Future<String> getJSONData() async {
+  var response = await http.get(
+      Uri.encodeFull('https://faketinder-spring-flutter.herokuapp.com/users/1'),
+      headers: {"Accept": "application/json"});
+  return "error";
+}
+
+Future<User> fetchUser() async {
+  final response =
+  await http.get('https://faketinder-spring-flutter.herokuapp.com/users/1');
+
+
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return User.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load user');
+  }
+}
+
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  MyApp({Key key}) : super(key: key);
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Future<User> futureUser;
+
+  @override
+  void initState() {
+    super.initState();
+    futureUser = fetchUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -80,39 +147,48 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
           ),
-          Stack(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: 5, right: 5),
-                height: 630,
-                child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: new Image.asset(
-                    "assets/images/girl.jpg",
-                    scale: 1,
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10, top: 500),
-                    child: Text(
-                      "UserName, Age \nState, city",
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+          Expanded(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 5, right: 5),
+                  height: 600,
+                  child: FittedBox(
+
+                    fit: BoxFit.fitHeight,
+                    child: new Image.asset(
+                      "assets/images/girl.jpg",
+                      width: 100, height: 100,
                     ),
                   ),
-                ],
-              )
-            ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 10, top: 500),
+                        child: FutureBuilder<User>(
+                            future: fetchUser(),
+                            builder: (context, snapshot) {
+                              if(snapshot.hasData) {
+                                return Text(snapshot.data.name.toString(), style: TextStyle(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold));
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              }
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            }
+                        )
+                    ),
+                  ],
+                )
+              ],
+            ),
+
           ),
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 20, left: 120),
+                margin: EdgeInsets.only(top: 20, bottom: 20, left: 120),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -148,3 +224,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
